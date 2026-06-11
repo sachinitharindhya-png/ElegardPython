@@ -179,6 +179,97 @@ def predict(req: PredictRequest):
 
 # ─────────────────────────────────────────────────────────────────────
 # Run locally
+@app.get("/input-schema")
+def input_schema():
+    return {
+        "categorical": {
+            "section_id": [
+                "S1","S2","S3","S4","S5","S6","S7",
+                "S8","S9","S10","S11","S12","S13","S14"
+            ],
+            "season": ["dry", "wet", "transition"],
+            "moon_phase": ["new", "crescent", "quarter", "gibbous", "full"],
+            "crop_type": ["sugarcane", "maize", "rice", "banana"],
+            "crop_maturity_stage": [
+                "seedling",
+                "growing",
+                "mature",
+                "post_harvest"
+            ]
+        },
+        "numeric": {
+            "hour_of_day": {
+                "type": "int",
+                "min": 0,
+                "max": 23
+            },
+            "is_night": {
+                "type": "int",
+                "allowed": [0, 1]
+            },
+            "temperature_c": {
+                "type": "float",
+                "min": -10,
+                "max": 60
+            },
+            "rainfall_last_24h_mm": {
+                "type": "float",
+                "min": 0
+            },
+            "days_to_harvest": {
+                "type": "int",
+                "min": 0,
+                "max": 365
+            },
+            "water_canal_present": {
+                "allowed": [0, 1]
+            },
+            "forest_distance_m": {
+                "type": "float",
+                "min": 0
+            },
+            "triggered_last_1hr": {
+                "allowed": [0, 1]
+            },
+            "triggered_last_6hrs": {
+                "allowed": [0, 1]
+            },
+            "triggers_last_7days": {
+                "type": "int",
+                "min": 0
+            },
+            "same_section_triggered_yesterday": {
+                "allowed": [0, 1]
+            },
+            "closest_detection_last_24h_m": {
+                "type": "float",
+                "min": 0
+            },
+            "avg_risk_score_last_week": {
+                "type": "float",
+                "min": 0,
+                "max": 1
+            },
+            "neighbor_max_risk_score": {
+                "type": "float",
+                "min": 0,
+                "max": 1
+            },
+            "neighbor_any_triggered_1hr": {
+                "allowed": [0, 1]
+            },
+            "minutes_since_last_trigger": {
+                "type": "float",
+                "min": 0
+            },
+            "time_decay_factor": {
+                "type": "float",
+                "min": 0,
+                "max": 1,
+                "optional": True
+            }
+        }
+    }
 # ─────────────────────────────────────────────────────────────────────
 if __name__ == "__main__":
     import uvicorn
